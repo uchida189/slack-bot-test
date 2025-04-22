@@ -7,8 +7,8 @@ const path = require('path');
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
-  socketMode: true,
-  appToken: process.env.SLACK_APP_TOKEN,
+  socketMode: true, // Socket Modeを有効に
+  appToken: process.env.SLACK_APP_TOKEN, // App-Level Tokenが必要
 });
 
 // 設定ファイルのパス
