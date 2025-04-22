@@ -13,4 +13,4 @@ services:
       - SLACK_APP_TOKEN=${SLACK_APP_TOKEN}
     restart: unless-stopped
     ports:
-      - "43823:8080"  # APIやWebhookのポート
+      - "8080:8080"

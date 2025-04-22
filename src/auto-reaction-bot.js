@@ -14,12 +14,24 @@ const app = new App({
 // 設定ファイルのパス
 const CONFIG_FILE_PATH = path.join(__dirname, 'config.json');
 
+// 設定をメモリにキャッシュする
+let configCache = null;
+let lastConfigLoad = 0;
+const CONFIG_CACHE_TTL = 60000; // 設定キャッシュの有効期間（ミリ秒）、1分
+
 // 設定を取得する関数
 function getConfig() {
+  const now = Date.now();
+  
+  // キャッシュが有効な場合はキャッシュから返す
+  if (configCache && (now - lastConfigLoad < CONFIG_CACHE_TTL)) {
+    return configCache;
+  }
+  
   try {
     if (fs.existsSync(CONFIG_FILE_PATH)) {
       const configData = fs.readFileSync(CONFIG_FILE_PATH, 'utf8');
-      return JSON.parse(configData);
+      configCache = JSON.parse(configData);
     } else {
       // 初期設定
       const initialConfig = { 
@@ -27,8 +39,11 @@ function getConfig() {
         enabledChannels: [] 
       };
       saveConfig(initialConfig);
-      return initialConfig;
+      configCache = initialConfig;
     }
+    
+    lastConfigLoad = now;
+    return configCache;
   } catch (error) {
     console.error('設定ファイル読み込みエラー:', error);
     // エラーが発生した場合は新しい設定を返す
@@ -40,6 +55,9 @@ function getConfig() {
 function saveConfig(config) {
   try {
     fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify(config, null, 2), 'utf8');
+    // キャッシュを更新
+    configCache = config;
+    lastConfigLoad = Date.now();
   } catch (error) {
     console.error('設定ファイル保存エラー:', error);
   }
@@ -98,7 +116,6 @@ app.message(async ({ message, say }) => {
     console.log("メッセージイベント処理開始:", message);
     
     const config = getConfig();
-    console.log("設定取得:", config);
     
     // チャンネルが有効かチェック
     if (!config.enabledChannels.includes(message.channel)) {
@@ -333,6 +350,6 @@ app.command('/reaction-disable', async ({ command, ack, respond }) => {
 
 // アプリ起動
 (async () => {
-  await app.start(process.env.PORT || 8080);
+  await app.start(process.env.PORT || 3000);
   console.log('⚡️ Bolt アプリが起動しました!');
 })();
