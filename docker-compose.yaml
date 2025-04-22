@@ -11,6 +11,8 @@ services:
     environment:
       - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
       - SLACK_APP_TOKEN=${SLACK_APP_TOKEN}
+      - PORT=${PORT}
+      - SLACK_SIGNING_SECRET=${SLACK_SIGNING_SECRET}
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "${PORT}:${PORT}"
