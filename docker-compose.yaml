@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  slack-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: slack-bot
+    volumes:
+      - .:/app
+    environment:
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      - SLACK_APP_TOKEN=${SLACK_APP_TOKEN}
+    restart: unless-stopped
+    ports:
+      - "43823:8080"  # APIやWebhookのポート

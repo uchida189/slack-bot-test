@@ -1,0 +1,37 @@
+# Node.js 依存関係
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# 環境変数
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 設定ファイル
+src/config.json
+
+# ログファイル
+logs/
+*.log
+
+# ビルド出力
+dist/
+build/
+out/
+
+# エディタ固有のファイル
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS固有のファイル
+.DS_Store
+Thumbs.db

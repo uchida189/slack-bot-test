@@ -1,0 +1,25 @@
+{
+  "name": "slack-auto-reaction-bot",
+  "version": "1.0.0",
+  "main": "src/auto-reaction-bot.js",
+  "scripts": {
+    "start": "node src/auto-reaction-bot.js",
+    "dev": "nodemon src/auto-reaction-bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "slack",
+    "bot",
+    "reaction"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "Slack自動リアクションボット",
+  "dependencies": {
+    "@slack/bolt": "^4.2.1",
+    "dotenv": "^16.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
